@@ -46,10 +46,10 @@ int main(){
 		stateFile.close();
 	}
 
-	vector<PopPoint> allPointsLatSort = allPoints;
+/*	vector<PopPoint> allPointsLatSort = allPoints;
 	vector<PopPoint> allPointsLonSort = allPoints;
 	sort(allPointsLatSort.begin(), allPointsLatSort.end(), moreLat);
-	sort(allPointsLonSort.begin(), allPointsLonSort.end(), moreLon);
+	sort(allPointsLonSort.begin(), allPointsLonSort.end(), moreLon);*/
 
 	PopPoint randCents[numDists];
 	for(int i = 0; i<numDists; i++){
@@ -58,17 +58,81 @@ int main(){
 		randCents[i] = allPoints[pointNum];
 	}
 
-	//PopPoint* oldCents = randCents;
-	PopPoint oldCents[2];
-	for(PopPoint& i : allPoints){
-		if(i.id == 107) oldCents[0] = i;
-		if(i.id == 178) oldCents[1] = i;
+//	PopPoint* oldCents = randCents;
+	PopPoint testCase[numDists] = {allPoints[178], allPoints[107]};
+	PopPoint* oldCents = testCase;
+
+	PopPoint* newCentsPt;
+	vector<PopPoint> allPtsUsed = allPoints;
+	int oldDisp = -1; 
+	int newDisp = -1;
+	bool amIDone = false;
+	int numTries = 0;
+	vector<vector<PopPoint>> posCents(6);
+	while(!amIDone){
+		oldDisp = sumOdaSquares(allPoints, oldCents);
+		newCentsPt = getNewCents(allPtsUsed, oldCents);
+		PopPoint newCents[numDists];
+		for(int i = 0; i<numDists; i++){
+			newCents[i] = *(newCentsPt+i);
+		}
+		newDisp = sumOdaSquares(allPoints, newCents);
+		if(newDisp<oldDisp && numTries<=6){
+			vector<PopPoint> centGroup(newCents, newCents+(sizeof(newCents)/sizeof(newCents[0])));
+			posCents[numTries] = centGroup;
+			vector<PopPoint> newPtsUsed;
+			for(PopPoint& i : allPtsUsed){
+				bool isInGroup = false;
+				for(PopPoint& j : centGroup){
+					if(j == i){
+						isInGroup = true;
+					}
+				}
+				if(!isInGroup){
+					newPtsUsed.push_back(i);
+				}
+			}
+			allPtsUsed = newPtsUsed;
+			numTries++;
+		}
+		else if(numTries>6){
+			bool anyBois = false;
+			for(vector<PopPoint>& i : posCents){
+				if(!(i[0] == PopPoint()) && !(i[1] == PopPoint())){
+					anyBois = true;
+					break;
+				}
+			}
+			if(!anyBois){
+				amIDone = true;
+				break;
+			}
+			else{
+				numTries = 0;
+	//			PopPoint base();
+				PopPoint potPopCent[numDists];
+				copy(posCents[0].begin(),posCents[0].end(), potPopCent);
+				PopPoint trueCent[numDists] = potPopCent;
+				int leastDist = sumOdaSquares(allPoints, trueCent);
+				for(int i = 0; i<posCents.size(); i++){
+					copy(posCents[i].begin(), posCents[i].end(), potPopCent);
+					if(sumOdaSquares(allPoints,potPopCent) < sumOdaSquares(allPoints,trueCent)){
+						leastDist = sumOdaSquares(allPoints,potPopCent);
+						copy(potPopCent, potPopCent+numDists, trueCent);
+					}
+				}
+				ofstream steps("rhodeIslandSteps.state", ofstream::out);
+				for(PopPoint& i : trueCent){
+					steps<<i.lon<<','<<i.lat<<','<<i.pop<<','<<endl;
+					cout<<i.lon<<','<<i.lat<<','<<i.pop<<','<<endl;
+				}
+				steps<<endl;
+				cout<<endl;
+				steps.close();
+			}
+		}
+
 	}
 
-	cout<<sumOdaSquares(allPoints, oldCents)<<endl;
-	
-	PopPoint* newCents = getNewCents(allPoints, oldCents);
-	
-	cout<<sumOdaSquares(allPoints, newCents)<<endl;
 	return 0;
 }

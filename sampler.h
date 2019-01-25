@@ -5,7 +5,16 @@ int numDists = 2; //2 districts in Rhode Island (disregard 5 districts in connec
 
 struct PopPoint{
 	double lon,lat;
-	int pop,id;
+	int pop,id = -1;
+
+	bool operator==(const PopPoint& b) const{
+		if(b.lon==lon && b.lat==lat && b.pop==pop && b.id==id){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 };
 
 bool moreLat(PopPoint a, PopPoint b){
@@ -121,8 +130,7 @@ int sumOdaSquares(vector<PopPoint> allPoints, PopPoint cents[]){
 	for(int& i : dists){
 		totalDist+=i;
 	}
-	cout<<endl;
-	return totalDist;
+	return abs(totalDist);
 }
 
 PopPoint * getNewCents(vector<PopPoint> allPoints, PopPoint cents[]){
