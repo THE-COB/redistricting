@@ -58,6 +58,9 @@ int main(){
 		randCents[i] = allPoints[pointNum];
 	}
 
+	
+
+/*
 //	PopPoint* oldCents = randCents;
 	PopPoint testCase[numDists] = {allPoints[178], allPoints[107]};
 	PopPoint* oldCents = testCase;
@@ -132,7 +135,7 @@ int main(){
 			}
 		}
 
-	}
+	}*/
 
 	return 0;
 }

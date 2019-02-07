@@ -24,7 +24,7 @@ bool moreLon(PopPoint a, PopPoint b){
 	return a.lon>b.lon;
 }
 
-string getCommand(PopPoint a, PopPoint b){
+/*string getCommand(PopPoint a, PopPoint b){
 	string strA = to_string(a.lon)+','+to_string(a.lat);
 	string strB = to_string(b.lon)+','+to_string(b.lat);
 	return strA+' '+strB+' '+to_string(a.id)+' '+to_string(b.id);
@@ -65,9 +65,9 @@ int getDist(PopPoint a, PopPoint b){
 		tempDist.close();
 	}
 	return finalDist;
-}
+}*/
 
-/*
+
 double M_PI = 4*atan(1);
 double deg2rad(double deg) {
 	return (deg * M_PI / 180);
@@ -92,9 +92,11 @@ double distanceEarth(PopPoint a, PopPoint b) {
 	v = sin((lon2r - lon1r)/2);
 	return 1000 * 2.0 * earthRadiusKm * asin(sqrt(u * u + cos(lat1r) * cos(lat2r) * v * v));
 }
-*/
 
-int sumOdaSquares(vector<PopPoint> allPoints, PopPoint cents[]){
+vector<PopPoint> * 
+
+
+/*int sumOdaSquares(vector<PopPoint> allPoints, PopPoint cents[]){
 	int dists[numDists];
 	vector<PopPoint> groups[2];
 
@@ -131,9 +133,9 @@ int sumOdaSquares(vector<PopPoint> allPoints, PopPoint cents[]){
 		totalDist+=i;
 	}
 	return abs(totalDist);
-}
+}*/
 
-PopPoint * getNewCents(vector<PopPoint> allPoints, PopPoint cents[]){
+/*PopPoint * getNewCents(vector<PopPoint> allPoints, PopPoint cents[]){
 	vector<PopPoint> groups[2];
 
 	for(PopPoint& i : allPoints){
@@ -166,4 +168,4 @@ PopPoint * getNewCents(vector<PopPoint> allPoints, PopPoint cents[]){
 		testCents[i] = least;
 	}
 	return testCents;
-}
+}*/
