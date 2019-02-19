@@ -21,7 +21,9 @@ string date = "2-19";
 string trial = "1";
 string folderName = "DATA/"+stateName+date+"_"+trial;
 ```
-accordingly
+accordingly,
+
+and set the number of districts in lloyd.cpp to the right number-- you have to change it in a few places
 
 Then, simply
 ```bash
