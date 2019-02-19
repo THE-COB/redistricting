@@ -10,7 +10,7 @@ Download a shapefile (from the [US Census](https://www.census.gov/geo/maps-data/
 
 In redistrict.cpp, change
 
-```
+```cpp
 string stateName = "ohio";
 string date = "2-19";
 string trial = "1";
