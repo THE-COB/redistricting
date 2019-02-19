@@ -10,10 +10,10 @@ Download a shapefile (from the [US Census](https://www.census.gov/geo/maps-data/
 
 In redistrict.cpp, change
 
-"""
+```
 string stateName = "ohio";
 string date = "2-19";
 string trial = "1";
 string folderName = "DATA/"+stateName+date+"_"+trial;
-""" 
+```
 Accordingly
