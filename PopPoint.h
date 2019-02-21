@@ -36,6 +36,9 @@ double distSquared(PopPoint a, PopPoint b) {
 	double lon2d = pow(b.lon-a.lon,2.0);
 	double lat2d = pow(b.lat-a.lat,2.0);
 	return (lon2d+lat2d)/1000;
+
+	//return pow(a.lat-b.lat,2) + (cos(a.lat*M_PI/180.0)*cos(b.lat*M_PI/180)*pow(a.lon-b.lon,2));
+
 	/*double lat1d = a.lat;
 	double lon1d = a.lon;
 	double lat2d = b.lat;

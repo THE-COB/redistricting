@@ -11,7 +11,7 @@ public:
 
 	void runAlgo(){	
 		assignNearest();
-		cout<<calcDisp()<<endl;
+		//cout<<calcDisp()<<endl;
 
 		int ogTime = time(NULL);
 		
@@ -28,11 +28,11 @@ public:
 					break;
 				}
 			}
-			cout<<newDisp<<endl;
+			//cout<<newDisp<<endl;
 			ofs<<setprecision(16)<<i<<","<<newDisp<<endl;
 			oldDisp = newDisp;
 		}
-		cout<<time(NULL)-ogTime<<endl;
+		//cout<<time(NULL)-ogTime<<endl;
 		ofs.close();
 		ofstream cents[numDists];
 		int count = 0;
@@ -46,23 +46,37 @@ public:
 			count++;
 			mCent.close();
 		}
-		cout<<endl;
+		//cout<<endl;
+
+		string popFname = folderName+"/pops.dat";
+		ofstream popFile(popFname.c_str());
 		for(vector<PopPoint>& i : pointGroups){
 			int tempPop = 0;
 			for(PopPoint& j : i){
 				tempPop+=j.pop;
 			}
-			cout<<tempPop<<endl;
+		//	cout<<tempPop<<endl;
+			popFile<<tempPop<<endl;
 		}
+		popFile.close();
+
+		//cout<<endl;
+		string centsFname = folderName+"/centCoords.csv";
+		ofstream centsFile(centsFname.c_str());
+		for(PopPoint& i : centers){
+			centsFile<<setprecision(12)<<i.lat<<","<<setprecision(12)<<i.lon<<endl;
+		//	cout<<setprecision(12)<<i.lat<<","<<setprecision(12)<<i.lon<<endl;
+		}
+		centsFile.close();
 	}
 
 private:
 	vector<PopPoint> allPoints;
 	//16 Districts in ohio
-	int numDists = 16;
-	PopPoint centers[16];
+	//int numDists = 16;
+	PopPoint centers[numDists];
 	
-	vector<PopPoint> pointGroups[16];
+	vector<PopPoint> pointGroups[numDists];
 
 	void randSet(){
 		for(int i = 0; i<numDists; i++){

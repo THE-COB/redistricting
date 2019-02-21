@@ -12,15 +12,18 @@
 using namespace std;
 using std::string;
 
-string stateName = "ohio";
-string date = "2-19";
-string trial = "1";
-string folderName = "DATA/"+stateName+date+"_"+trial;
+const string stateName = "maryland";
+const string date = "2-20";
+const int numDists = 8; //8 districts in maryland
+string trial = "0";
+
+string folderName = "DATA/"+stateName+"/"+stateName+date+"_"+trial;
 
 #include "PopPoint.h"
 #include "lloyd.h"
 
-int main(){
+int main(int argc, char** argv){
+
 	string fName = "statefiles/"+stateName+".state";
 	ifstream stateFile(fName);
 	vector<PopPoint> allPoints;
@@ -58,8 +61,16 @@ int main(){
 	sort(allPointsLatSort.begin(), allPointsLatSort.end(), moreLat);
 	sort(allPointsLonSort.begin(), allPointsLonSort.end(), moreLon);*/
 
-	lloyd newLloyd(allPoints);
-	newLloyd.runAlgo();
+	for(int i = 379; i<1000; i++){
+		trial = to_string(i);
+
+		folderName = "DATA/"+stateName+"/"+stateName+date+"_"+trial;
+		string folderCommand = "mkdir "+folderName;
+		//cout<<folderCommand<<endl;
+		system(folderCommand.c_str());
+		lloyd newLloyd(allPoints);
+		newLloyd.runAlgo();
+	}
 /*
 //	PopPoint* oldCents = randCents;
 	PopPoint testCase[numDists] = {allPoints[178], allPoints[107]};
