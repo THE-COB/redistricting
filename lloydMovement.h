@@ -1,6 +1,6 @@
-class lloyd{
+class lloydMovement{
 public:
-	lloyd(vector<PopPoint> allPts){
+	lloydMovement(vector<PopPoint> allPts){
 		allPoints = allPts;
 		randSet();
 	}
@@ -25,8 +25,12 @@ public:
 			double newDisp = calcDisp();
 			if(i != 0){
 				if(oldDisp<=newDisp){
+					graphState(to_string(i));
 					break;
 				}
+			}
+			if(i%10 == 0){
+				graphState(to_string(i));
 			}
 			//cout<<newDisp<<endl;
 			ofs<<setprecision(16)<<i<<","<<newDisp<<endl;
@@ -34,40 +38,6 @@ public:
 		}
 		//cout<<time(NULL)-ogTime<<endl;
 		ofs.close();
-		ofstream cents[numDists];
-		int count = 0;
-		ofstream mCent;
-		for(vector<PopPoint>& i : pointGroups){
-			string fname = folderName+"/cent"+to_string(count)+".csv";
-			mCent.open(fname.c_str());
-			for(PopPoint& j : i){
-				mCent<<setprecision(12)<<j.lat<<","<<setprecision(12)<<j.lon<<endl;
-			}
-			count++;
-			mCent.close();
-		}
-		//cout<<endl;
-
-		string popFname = folderName+"/pops.dat";
-		ofstream popFile(popFname.c_str());
-		for(vector<PopPoint>& i : pointGroups){
-			int tempPop = 0;
-			for(PopPoint& j : i){
-				tempPop+=j.pop;
-			}
-		//	cout<<tempPop<<endl;
-			popFile<<tempPop<<endl;
-		}
-		popFile.close();
-
-		//cout<<endl;
-		string centsFname = folderName+"/centCoords.csv";
-		ofstream centsFile(centsFname.c_str());
-		for(PopPoint& i : centers){
-			centsFile<<setprecision(12)<<i.lat<<","<<setprecision(12)<<i.lon<<endl;
-		//	cout<<setprecision(12)<<i.lat<<","<<setprecision(12)<<i.lon<<endl;
-		}
-		centsFile.close();
 	}
 
 	void realCents(){
@@ -180,4 +150,43 @@ private:
 		return disp;
 	}
 
+	void graphState(string adder){
+		ofstream cents[numDists];
+		int count = 0;
+		ofstream mCent;
+		for(vector<PopPoint>& i : pointGroups){
+			string fname = folderName+"/cent"+to_string(count)+".csv";
+			mCent.open(fname.c_str());
+			for(PopPoint& j : i){
+				mCent<<setprecision(12)<<j.lat<<","<<setprecision(12)<<j.lon<<endl;
+			}
+			count++;
+			mCent.close();
+		}
+		//cout<<endl;
+
+		string popFname = folderName+"/pops.dat";
+		ofstream popFile(popFname.c_str());
+		for(vector<PopPoint>& i : pointGroups){
+			int tempPop = 0;
+			for(PopPoint& j : i){
+				tempPop+=j.pop;
+			}
+		//	cout<<tempPop<<endl;
+			popFile<<tempPop<<endl;
+		}
+		popFile.close();
+
+		//cout<<endl;
+		string centsFname = folderName+"/centCoords.csv";
+		ofstream centsFile(centsFname.c_str());
+		for(PopPoint& i : centers){
+			centsFile<<setprecision(12)<<i.lat<<","<<setprecision(12)<<i.lon<<endl;
+		//	cout<<setprecision(12)<<i.lat<<","<<setprecision(12)<<i.lon<<endl;
+		}
+		centsFile.close();
+
+		string sysCommand = "cmd /C \"python graphState.py 2\" "+adder;
+		system(sysCommand.c_str());
+	}
 };

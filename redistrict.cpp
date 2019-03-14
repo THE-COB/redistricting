@@ -12,8 +12,8 @@
 using namespace std;
 using std::string;
 
-const string stateName = "maryland";
-const string date = "2-20";
+const string stateName = "marylandBalance";
+const string date = "3-14";
 const int numDists = 8; //8 districts in maryland
 string trial = "0";
 
@@ -21,6 +21,9 @@ string folderName = "DATA/"+stateName+"/"+stateName+date+"_"+trial;
 
 #include "PopPoint.h"
 #include "lloyd.h"
+#include "lloydBalanced.h"
+#include "lloydBalancedII.h"
+#include "lloydMovement.h"
 
 int main(int argc, char** argv){
 
@@ -61,16 +64,47 @@ int main(int argc, char** argv){
 	sort(allPointsLatSort.begin(), allPointsLatSort.end(), moreLat);
 	sort(allPointsLonSort.begin(), allPointsLonSort.end(), moreLon);*/
 
-	for(int i = 379; i<1000; i++){
-		trial = to_string(i);
+/*  _____            _    _____          _        ____       _               
+ |  __ \          | |  / ____|        | |      |  _ \     | |              
+ | |__) |___  __ _| | | |     ___   __| | ___  | |_) | ___| | _____      __
+ |  _  // _ \/ _` | | | |    / _ \ / _` |/ _ \ |  _ < / _ \ |/ _ \ \ /\ / /
+ | | \ \  __/ (_| | | | |___| (_) | (_| |  __/ | |_) |  __/ | (_) \ V  V / 
+ |_|  \_\___|\__,_|_|  \_____\___/ \__,_|\___| |____/ \___|_|\___/ \_/\_/  
+                                                                           
+                                                                           */
 
-		folderName = "DATA/"+stateName+"/"+stateName+date+"_"+trial;
-		string folderCommand = "mkdir "+folderName;
-		//cout<<folderCommand<<endl;
-		system(folderCommand.c_str());
-		lloyd newLloyd(allPoints);
-		newLloyd.runAlgo();
-	}
+	folderName = "DATA/"+stateName+"/"+stateName+date+"_"+trial;
+	string folderCommand = "mkdir "+folderName;
+	//cout<<folderCommand<<endl;
+	system(folderCommand.c_str());
+	lloydBalancedII newLloyd(allPoints);
+	newLloyd.runAlgo();
+
+/*  _____            _    _____          _                 _                    
+ |  __ \          | |  / ____|        | |          /\   | |                   
+ | |__) |___  __ _| | | |     ___   __| | ___     /  \  | |__   _____   _____ 
+ |  _  // _ \/ _` | | | |    / _ \ / _` |/ _ \   / /\ \ | '_ \ / _ \ \ / / _ \
+ | | \ \  __/ (_| | | | |___| (_) | (_| |  __/  / ____ \| |_) | (_) \ V /  __/
+ |_|  \_\___|\__,_|_|  \_____\___/ \__,_|\___| /_/    \_\_.__/ \___/ \_/ \___|
+                                                                              
+                                                                              */
+
+
+
+
+/*	lloyd newLloyd(allPoints);
+	newLloyd.realCents();*/
+
+
+
+
+
+
+
+
+
+
+
 /*
 //	PopPoint* oldCents = randCents;
 	PopPoint testCase[numDists] = {allPoints[178], allPoints[107]};

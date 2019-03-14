@@ -1,6 +1,6 @@
-class lloyd{
+class lloydBalancedII{
 public:
-	lloyd(vector<PopPoint> allPts){
+	lloydBalancedII(vector<PopPoint> allPts){
 		allPoints = allPts;
 		randSet();
 	}
@@ -22,6 +22,8 @@ public:
 		for(int i = 0; i<100; i++){
 			changeCent();
 			assignNearest();
+			cout<<oldDisp<<endl;
+			cout<<calcPopBalance()<<endl;
 			double newDisp = calcDisp();
 			if(i != 0){
 				if(oldDisp<=newDisp){
@@ -123,7 +125,7 @@ private:
 		}
 	}
 
-	void assignNearest(){
+	/*void assignNearest(){
 		for(int i = 0; i<numDists; i++){
 			pointGroups[i].erase(pointGroups[i].begin(), pointGroups[i].end());
 		}
@@ -138,6 +140,25 @@ private:
 			}
 			pointGroups[tempPoint].push_back(i);
 		}
+	}*/
+
+	void assignNearest(){
+		int count = 0;
+		int totalPopOState = 0;
+		double avgPopOState;
+		for(vector<PopPoint>& i : pointGroups){
+			totalPopOState+=popOfGroup(i);
+		}
+		avgPopOState = (double)totalPopOState/(double)numDists;
+
+		for(int i = 0; i<numDists; i++){
+			pointGroups[i].erase(pointGroups[i].begin(), pointGroups[i].end());
+		}
+		for(PopPoint& i : allPoints){
+			double tempDist = distSquared(i,centers[0]);
+			int tempPoint = 0;
+			
+		}
 	}
 
 	void changeCent(){
@@ -148,6 +169,7 @@ private:
 			totalPopOState+=popOfGroup(i);
 		}
 		avgPopOState = (double)totalPopOState/(double)numDists;
+		
 		for(vector<PopPoint>& i : pointGroups){
 			double newLat = 0;
 			double newLon = 0;
@@ -180,4 +202,17 @@ private:
 		return disp;
 	}
 
+	int calcPopBalance(){
+		int largestPop = 0;
+		int smallestPop = 99999999;
+		for(vector<PopPoint>& i : pointGroups){
+			if(popOfGroup(i) > largestPop){
+				largestPop = popOfGroup(i);
+			}
+			if(popOfGroup(i) < smallestPop){
+				smallestPop = popOfGroup(i);
+			}
+		}
+		return largestPop-smallestPop;
+	}
 };

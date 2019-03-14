@@ -3,7 +3,8 @@ using std::string;
 
 struct PopPoint{
 	double lon,lat;
-	int pop,id = -1;
+	int pop = 0;
+	int id = -1;
 
 	bool operator==(const PopPoint& b) const{
 		if(b.lon==lon && b.lat==lat && b.pop==pop && b.id==id){
@@ -20,6 +21,18 @@ bool moreLat(PopPoint a, PopPoint b){
 }
 bool moreLon(PopPoint a, PopPoint b){
 	return a.lon>b.lon;
+}
+
+int popOfGroup(vector<PopPoint> group){
+	int totalPop = 0;
+	for(PopPoint& i : group){
+		totalPop+=i.pop;
+	}
+	return totalPop;
+}
+
+bool largerGroup(vector<PopPoint> groupA, vector<PopPoint> groupB){
+	return popOfGroup(groupA) > popOfGroup(groupB);
 }
 
 double M_PI = 4*atan(1);
